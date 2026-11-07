@@ -70,6 +70,23 @@ def probe_provider_network():
                 reply.read(512)
             finally:
                 conn.close()
+        try:
+            import ssl
+            with socket.create_connection((p.hostname,443),timeout=7) as sock:
+                with ssl.create_default_context().wrap_socket(sock,server_hostname=p.hostname) as tls:
+                    print("LABELA_NETWORK HTTPS_TLS_OK VERSION="+str(tls.version()),flush=True)
+            conn=http.client.HTTPSConnection(p.hostname,443,timeout=8)
+            try:
+                conn.request("GET","/",headers={"User-Agent":"LabelaPlayMobile/2.0"})
+                reply=conn.getresponse()
+                print("LABELA_NETWORK HTTPS_GET_ROOT="+str(reply.status),flush=True)
+                reply.read(512)
+            finally:
+                conn.close()
+        except (TimeoutError,socket.timeout):
+            print("LABELA_NETWORK HTTPS_443_TIMEOUT",flush=True)
+        except Exception as e:
+            print("LABELA_NETWORK HTTPS_TEST_FAILED kind="+type(e).__name__,flush=True)
     except socket.gaierror:
         print("LABELA_NETWORK DNS_FAILURE - host could not be resolved",flush=True)
     except (TimeoutError,socket.timeout):
