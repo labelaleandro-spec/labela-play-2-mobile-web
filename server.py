@@ -39,16 +39,59 @@ class NoRedirect(HTTPRedirectHandler):
         return None
 OPENER=build_opener(NoRedirect)
 
+def probe_provider_network():
+    """Non-credentialed network check. No login secrets or account lookup."""
+    try:
+        p=urlsplit(PROVIDER)
+        port=p.port or (443 if p.scheme=="https" else 80)
+        infos=socket.getaddrinfo(p.hostname,port,type=socket.SOCK_STREAM)
+        print("LABELA_NETWORK DNS_OK address_count="+str(len(infos)),flush=True)
+        with socket.create_connection((p.hostname,port),timeout=7):
+            print("LABELA_NETWORK TCP_OK port="+str(port),flush=True)
+        import http.client
+        conn=(http.client.HTTPSConnection(p.hostname,port,timeout=8)
+              if p.scheme=="https" else http.client.HTTPConnection(p.hostname,port,timeout=8))
+        try:
+            conn.request("HEAD","/player_api.php",headers={"User-Agent":"LabelaPlayMobile/2.0"})
+            resp=conn.getresponse()
+            location=resp.getheader("Location","")
+            target=urlsplit(urljoin(PROVIDER+"/",location)).hostname if location else ""
+            print("LABELA_NETWORK HTTP_HEAD_STATUS="+str(resp.status)+(" REDIRECT_HOST="+str(target) if target else ""),flush=True)
+            resp.read(1000)
+        finally:
+            conn.close()
+    except socket.gaierror:
+        print("LABELA_NETWORK DNS_FAILURE - host could not be resolved",flush=True)
+    except (TimeoutError,socket.timeout):
+        print("LABELA_NETWORK CONNECT_TIMEOUT",flush=True)
+    except ConnectionRefusedError:
+        print("LABELA_NETWORK CONNECTION_REFUSED",flush=True)
+    except Exception as e:
+        print("LABELA_NETWORK TEST_FAILED kind="+type(e).__name__,flush=True)
+
 def clean_error(e):
-    if isinstance(e,HTTPError):return "Servidor IPTV retornou HTTP "+str(e.code)
+    if isinstance(e,HTTPError):
+        if e.code in (301,302,303,307,308):
+            return "Servidor IPTV redirecionou para outro endereço (HTTP "+str(e.code)+"). Precisamos confirmar o endereço atualizado com o provedor."
+        if e.code==403:return "Servidor IPTV recusou o acesso deste servidor (HTTP 403). Possível bloqueio de IP, servidor ou assinatura."
+        return "Servidor IPTV retornou HTTP "+str(e.code)
+    if isinstance(e,socket.gaierror):return "Não foi possível encontrar o endereço do provedor (DNS)."
     if isinstance(e,(TimeoutError,socket.timeout)):return "Servidor IPTV não respondeu no tempo esperado."
-    if isinstance(e,(URLError,OSError,ConnectionError)):return "Não foi possível conectar ao provedor IPTV."
+    if isinstance(e,URLError):
+        reason=e.reason
+        if isinstance(reason,socket.gaierror):return "DNS do provedor não respondeu."
+        if isinstance(reason,(TimeoutError,socket.timeout)):return "Conexão com o provedor expirou."
+        return "Não foi possível acessar a rede do provedor IPTV."
+    if isinstance(e,(OSError,ConnectionError)):return "Não foi possível conectar ao provedor IPTV."
     if isinstance(e,ValueError):return str(e)[:160]
     return "Erro interno na consulta. Tente novamente."
 
 def log(message):
+    """Messages must be sanitized before calling: never log user, password or URLs."""
+    safe=message[:160]
+    print("LABELA_DIAG "+safe,flush=True)
     with LOCK:
-        CACHE["events"].append({"at":time.strftime("%H:%M:%S"),"message":message[:160]})
+        CACHE["events"].append({"at":time.strftime("%H:%M:%S"),"message":safe})
         CACHE["events"]=CACHE["events"][-30:]
 
 def upstream(url,range_header=None):
@@ -348,4 +391,5 @@ class Handler(BaseHTTPRequestHandler):
 
 if __name__=="__main__":
     print("Labela Play 2.0 Mobile - HTTPS via Render, HTTP upstream - test only",flush=True)
+    threading.Thread(target=probe_provider_network,daemon=True).start()
     ThreadingHTTPServer(("0.0.0.0",PORT),Handler).serve_forever()
