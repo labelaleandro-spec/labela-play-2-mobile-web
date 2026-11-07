@@ -56,6 +56,28 @@ def load_brand():
 
 BRAND_ICON=load_brand()
 
+DEMO_MEDIA=Path(__file__).with_name("demo-media")
+DEMO_FILES={
+    "/demo/media/sinal.ts":("sinal.ts","video/mp2t"),
+    "/demo/media/teste.mp4":("teste.mp4","video/mp4"),
+    "/demo/media/radio.mp3":("radio.mp3","audio/mpeg"),
+}
+DEMO_ITEMS=[
+    {"key":"live:1","id":"1","kind":"live","name":"Canal de teste","group":"Demonstração","ext":"m3u8",
+     "plot":"Sinal HLS de oito segundos com barras de cor, contador e som."},
+    {"key":"movie:2","id":"2","kind":"movie","name":"Filme de teste","group":"Demonstração","ext":"mp4",
+     "plot":"Amostra MP4 para testar imagem, som, pausa e tela cheia."},
+    {"key":"series:3","id":"3","kind":"series","name":"Série de teste","group":"Demonstração",
+     "plot":"Temporadas e episódios de demonstração. Ambos os episódios usam o mesmo clipe de teste."},
+    {"key":"radio:4","id":"4","kind":"radio","name":"Rádio de teste","group":"Demonstração","ext":"mp3",
+     "plot":"Sinal MP3 de oito segundos para conferir o áudio."},
+]
+DEMO_EPISODES=[
+    {"id":"31","season":"1","number":"1","name":"Imagem e som","ext":"mp4"},
+    {"id":"32","season":"2","number":"1","name":"Tela cheia","ext":"mp4"},
+]
+
+
 class ProviderError(ValueError):
     def __init__(self, code, message, status=502):
         super().__init__(message)
@@ -455,14 +477,20 @@ class Handler(BaseHTTPRequestHandler):
             finally:AI_SLOT.release()
         return self.sendj({"error":"Rota inexistente."},404)
     def do_GET(self):
-        path=urlsplit(self.path).path
-        if path=="/health":return self.sendj({"ok":True,"service":"labela-play-mobile","revision":"isolated-xtream","brandConfigured":bool(BRAND_ICON)})
+        request=urlsplit(self.path)
+        path=request.path
+        if path=="/health":
+            ready=all((DEMO_MEDIA/name).is_file() for name,_ in DEMO_FILES.values())
+            return self.sendj({"ok":True,"service":"labela-play-mobile","revision":"isolated-xtream",
+                               "brandConfigured":bool(BRAND_ICON),"demoReady":ready})
         if path=="/login":
             html=b'''<!doctype html><html lang="pt-BR"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Labela Play | Acesso</title><style>body{background:#071326;color:#f6f7ff;font:16px system-ui;min-height:93vh;display:grid;place-items:center}main{padding:28px;background:#102543;border:1px solid #375d83;border-radius:19px;width:min(84vw,380px)}h1{letter-spacing:-1px}em{color:#ffc338;font-style:normal}input,button{width:100%;padding:15px;border-radius:11px;margin-top:12px;box-sizing:border-box;font:inherit}input{background:#07192e;border:1px solid #53769d;color:white}button{background:#ffc338;color:#101c31;border:0;font-weight:800}p{color:#bacce1;font-size:13px}</style><main><h1>LABELA <em>PLAY 2.0</em></h1><p>Acesso ao ambiente de teste privado. Este codigo e diferente da senha IPTV.</p><form id="f"><input id="pin" type="password" autocomplete="off" placeholder="Codigo de acesso ao teste" required><button>Entrar</button></form><p id="m"></p></main><script>document.getElementById("f").onsubmit=async e=>{e.preventDefault();try{const r=await fetch("/api/unlock",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({code:document.getElementById("pin").value})});const d=await r.json();if(!r.ok)throw Error(d.error||"Erro de acesso");location.href="/";}catch(e){document.getElementById("m").textContent=e.message}}</script></html>'''
+            if request.query=="next=demo":
+                html=html.replace(b'location.href="/";',b'location.href="/demo";')
             return self.send_body(html)
-        if path in ("/","/index.html") and not self.session():
+        if path in ("/","/index.html","/demo") and not self.session():
             self.send_response(303)
-            self.send_header("Location","/login")
+            self.send_header("Location","/login?next=demo" if path=="/demo" else "/login")
             self.send_header("Cache-Control","no-store")
             self.end_headers()
             return
@@ -470,6 +498,8 @@ class Handler(BaseHTTPRequestHandler):
         if path=="/brand/icon.png":
             if not BRAND_ICON:return self.sendj({"error":"Marca não configurada."},404)
             return self.send_body(BRAND_ICON,"image/png")
+        if path.startswith("/api/demo/") or path.startswith("/demo/media/"):
+            return self.serve_demo(path,request.query)
         if path=="/api/catalog":
             if not self.account.user or not self.account.password:
                 return self.sendj({"connected":False,"items":[],"state":"credentials_missing"})
@@ -541,15 +571,50 @@ class Handler(BaseHTTPRequestHandler):
             return self.stream(entry[0],False)
         if path=="/":
             path="/index.html"
-        if path!="/index.html":return self.sendj({"error":"Não encontrado."},404)
+        if path not in ("/index.html","/demo"):return self.sendj({"error":"Não encontrado."},404)
         try:
             html=Path(__file__).with_name("index.html").read_bytes()
+            if path=="/demo":
+                html=html.replace(b"<body>",b'<body data-demo="true">')
             if BRAND_ICON:
                 html=html.replace(b"<!-- BRAND_FAVICON -->",b'<link rel="icon" href="/brand/icon.png" type="image/png">')
                 html=html.replace(b"<!-- BRAND_ICON -->",b'<img class="brand-icon" src="/brand/icon.png" width="40" height="40" alt="">')
             return self.send_body(html)
         except OSError:
             return self.sendj({"error":"Interface não encontrada."},500)
+    def serve_demo(self,path,query):
+        if path=="/api/demo/catalog":
+            return self.sendj({"connected":True,"items":DEMO_ITEMS,"count":len(DEMO_ITEMS)})
+        if path=="/api/demo/epg" and query=="id=1":
+            return self.sendj({"epg":[{"start":"09:00","end":"09:15","title":"Amostra de programação"}]})
+        if path=="/api/demo/series" and query=="id=3":
+            return self.sendj({"episodes":DEMO_EPISODES})
+        if path=="/demo/media/canal.m3u8":
+            return self.send_body(b"#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-TARGETDURATION:8\n"
+                                  b"#EXT-X-PLAYLIST-TYPE:VOD\n#EXTINF:8.0,\nsinal.ts\n#EXT-X-ENDLIST\n",
+                                  "application/vnd.apple.mpegurl")
+        asset=DEMO_FILES.get(path)
+        if not asset:
+            return self.sendj({"error":"Amostra inexistente."},404)
+        name,mime=asset
+        try:
+            data=(DEMO_MEDIA/name).read_bytes()
+        except OSError:
+            return self.sendj({"error":"Amostra indisponível."},503)
+        extra={"Accept-Ranges":"bytes"}
+        value=self.headers.get("Range")
+        if value:
+            match=re.fullmatch(r"bytes=(\d{1,16})-(\d{0,16})|bytes=-(\d{1,16})",value)
+            if match:
+                start,end,suffix=match.groups()
+                first=max(0,len(data)-int(suffix)) if suffix else int(start)
+                last=min(int(end),len(data)-1) if end else len(data)-1
+                if first<=last:
+                    extra["Content-Range"]=f"bytes {first}-{last}/{len(data)}"
+                    return self.send_body(data[first:last+1],mime,206,extra)
+            extra["Content-Range"]=f"bytes */{len(data)}"
+            return self.send_body(b"",mime,416,extra)
+        return self.send_body(data,mime,extra=extra)
     def stream(self,url,force=False):
         started=False
         try:
