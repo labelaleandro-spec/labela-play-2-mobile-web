@@ -60,6 +60,16 @@ def probe_provider_network():
             resp.read(1000)
         finally:
             conn.close()
+        for probe_path in ("/","/player_api.php"):
+            conn=(http.client.HTTPSConnection(p.hostname,port,timeout=8)
+                  if p.scheme=="https" else http.client.HTTPConnection(p.hostname,port,timeout=8))
+            try:
+                conn.request("GET",probe_path,headers={"User-Agent":"LabelaPlayMobile/2.0"})
+                reply=conn.getresponse()
+                print("LABELA_NETWORK HTTP_GET_STATUS="+str(reply.status)+" PATH="+probe_path,flush=True)
+                reply.read(512)
+            finally:
+                conn.close()
     except socket.gaierror:
         print("LABELA_NETWORK DNS_FAILURE - host could not be resolved",flush=True)
     except (TimeoutError,socket.timeout):
