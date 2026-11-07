@@ -29,7 +29,7 @@ if origin.scheme not in ("https","http") or not origin.hostname or origin.userna
     raise RuntimeError("Invalid provider host")
 COOKIE=secrets.token_urlsafe(36)
 LOCK=threading.RLock()
-CACHE={"items":None,"at":0,"token":{},"events":[],"series":{}}
+CACHE={"items":None,"at":0,"token":{},"events":[],"series":{},"catalog_issues":{}}
 ATTEMPTS={}
 ALLOWED={origin.netloc.lower()}
 ALLOWED.update(x.strip().lower() for x in os.environ.get("LABELA_ALLOWED_CDN","").split(",") if x.strip())
@@ -69,23 +69,32 @@ def xtream(action="",extra=None):
     with upstream(uri) as r:
         data=r.read(24*1024*1024+1)
         if len(data)>24*1024*1024:raise ValueError("Catálogo excede limite de segurança.")
-        return json.loads(data)
+        try:
+            return json.loads(data)
+        except (json.JSONDecodeError,UnicodeDecodeError):
+            raise ValueError("O provedor não retornou JSON Xtream válido.")
 
 def build_catalog():
     actions=("get_live_categories","get_live_streams","get_vod_categories","get_vod_streams","get_series_categories","get_series")
-    with concurrent.futures.ThreadPoolExecutor(max_workers=6) as ex:
+    data={}
+    problems={}
+    with concurrent.futures.ThreadPoolExecutor(max_workers=4) as ex:
         fut={a:ex.submit(xtream,a) for a in actions}
-        data={a:f.result() for a,f in fut.items()}
+        for action,f in fut.items():
+            try:
+                value=f.result()
+                if not isinstance(value,list):
+                    raise ValueError("Resposta inesperada do provedor.")
+                data[action]=value
+            except Exception as e:
+                problems[action]=clean_error(e)
+                log("Falha ao consultar "+action+": "+clean_error(e))
     categories={}
-    for kind,cat_action in (("live","get_live_categories"),("movie","get_vod_categories"),("series","get_series_categories")):
-        c=data[cat_action]
-        if not isinstance(c,list):raise ValueError("Categorias inválidas: "+kind)
-        categories[kind]={str(x.get("category_id")):str(x.get("category_name") or "Outros") for x in c if isinstance(x,dict)}
+    for kind,act in (("live","get_live_categories"),("movie","get_vod_categories"),("series","get_series_categories")):
+        categories[kind]={str(x.get("category_id")):str(x.get("category_name") or "Outros") for x in data.get(act,[]) if isinstance(x,dict)}
     output=[]
     for kind,action in (("live","get_live_streams"),("movie","get_vod_streams"),("series","get_series")):
-        entries=data[action]
-        if not isinstance(entries,list):raise ValueError("Catálogo inválido: "+kind)
-        for item in entries[:65000]:
+        for item in data.get(action,[])[:65000]:
             if not isinstance(item,dict):continue
             sid=str(item.get("series_id") if kind=="series" else item.get("stream_id"))
             if not sid.isdecimal():continue
@@ -96,10 +105,14 @@ def build_catalog():
                 "poster":str(item.get("stream_icon") or item.get("cover") or "")[:700],
                 "plot":str(item.get("plot") or "")[:800],"ext":ext,
                 "added":str(item.get("added") or "")[:25]})
+    stream_actions=("get_live_streams","get_vod_streams","get_series")
+    if all(act in problems for act in stream_actions):
+        raise ValueError("A autenticação foi aceita, mas nenhuma consulta de catálogo respondeu. Consulte Diagnóstico.")
     with LOCK:
         CACHE["items"]=output
         CACHE["at"]=time.monotonic()
-    log("Catálogo consultado: "+str(len(output))+" registros.")
+        CACHE["catalog_issues"]=problems
+    log("Catálogo: "+str(len(output))+" itens; "+str(len(problems))+" consultas com problema.")
     return output
 
 def get_catalog():
@@ -195,6 +208,8 @@ class Handler(BaseHTTPRequestHandler):
             except Exception:return self.sendj({"error":"Código inválido."},400)
         if not self.gated():return
         if path=="/api/connect":
+            stage="preenchimento"
+            authenticated_provider=False
             try:
                 inp=self.body(1500)
                 user=str(inp.get("user","")).strip()
@@ -204,19 +219,30 @@ class Handler(BaseHTTPRequestHandler):
                 with LOCK:
                     USER,PASSWORD=user,pw
                     CACHE.update({"items":None,"at":0,"token":{},"series":{}})
+                stage="autenticação"
+                log("Consultando autenticação Xtream no servidor configurado.")
                 test=xtream()
-                if not isinstance(test,dict) or not isinstance(test.get("user_info"),dict):raise ValueError("Servidor não confirmou uma conta Xtream.")
-                info=test["user_info"]
-                status=str(info.get("status",""))
-                if status.lower() not in ("active","ativo","enabled"):raise ValueError("Conta não está ativa: "+status[:40])
-                data=get_catalog()
-                return self.sendj({"ok":True,"count":len(data)})
+                if not isinstance(test,dict) or not isinstance(test.get("user_info"),dict):
+                    raise ValueError("Servidor não confirmou uma conta Xtream.")
+                status=str(test["user_info"].get("status",""))
+                if status.lower() not in ("active","ativo","enabled","trial"):
+                    raise ValueError("Conta não está ativa: "+status[:40])
+                authenticated_provider=True
+                stage="catálogo"
+                log("Conta validada pelo provedor. Consultando categorias e títulos.")
+                try:
+                    data=get_catalog()
+                    return self.sendj({"ok":True,"count":len(data),"partial":bool(CACHE.get("catalog_issues")),"issues":list(CACHE.get("catalog_issues",{}))})
+                except Exception as e:
+                    log("Conta validada, catálogo indisponível: "+clean_error(e))
+                    return self.sendj({"error":"Conta autenticada, mas o catálogo não carregou. "+clean_error(e),"authenticated":True},502)
             except Exception as e:
-                with LOCK:
-                    USER,PASSWORD="",""
-                    CACHE["items"]=None
-                log("Autenticação Xtream não concluída.")
-                return self.sendj({"error":clean_error(e)},502)
+                if not authenticated_provider:
+                    with LOCK:
+                        USER,PASSWORD="",""
+                        CACHE["items"]=None
+                log("Falha na etapa de "+stage+": "+clean_error(e))
+                return self.sendj({"error":"Falha em "+stage+": "+clean_error(e),"authenticated":authenticated_provider},502)
         return self.sendj({"error":"Rota inexistente."},404)
     def do_GET(self):
         path=urlsplit(self.path).path
@@ -239,7 +265,7 @@ class Handler(BaseHTTPRequestHandler):
                 log("Não foi possível consultar catálogo.")
                 return self.sendj({"connected":False,"error":clean_error(e)},502)
         if path=="/api/account":
-            return self.sendj({"configured":bool(USER and PASSWORD),"provider":"4KPlay - origem HTTP","warning":"Trecho da hospedagem ate o provedor nao criptografado.","count":len(CACHE["items"] or [])})
+            return self.sendj({"configured":bool(USER and PASSWORD),"provider":"4KPlay - origem HTTP","warning":"Trecho da hospedagem ate o provedor nao criptografado.","count":len(CACHE["items"] or []),"catalogIssues":list(CACHE.get("catalog_issues",{}))})
         if path=="/api/events":
             return self.sendj({"events":CACHE["events"]})
         if path=="/api/epg":
