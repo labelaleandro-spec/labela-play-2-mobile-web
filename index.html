@@ -4,29 +4,32 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#071426"><meta name="color-scheme" content="dark">
 <title>Labela Play 2.0 Mobile — Teste Privado</title>
+<!-- BRAND_FAVICON -->
 <style>
 :root{--bg:#060f21;--panel:#10243f;--panel2:#142e4d;--stroke:#315071;--txt:#f0f6ff;--soft:#adc1d8;--gold:#f4bd34;--aqua:#4bc1df;--red:#ffad9c;--r:15px}
 *{box-sizing:border-box}html{height:100%}body{margin:0;min-height:100%;background:var(--bg);font:14px/1.48 system-ui,-apple-system,Segoe UI,Arial,sans-serif;color:var(--txt)}
 button,input,select{font:inherit}button{cursor:pointer;-webkit-tap-highlight-color:transparent}button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
 a{color:var(--aqua)}.shell{max-width:960px;margin:auto;min-height:100dvh;display:flex;flex-direction:column}.top{height:69px;display:flex;gap:10px;align-items:center;justify-content:space-between;padding:12px 15px;border-bottom:1px solid #243f5e;position:sticky;top:0;background:#071629e8;backdrop-filter:blur(12px);z-index:10}.logo{font-size:20px;font-weight:900;letter-spacing:-.6px;white-space:nowrap}.logo i{font-style:normal;color:var(--gold)}.subtitle{font-size:10px;color:#92adc9;line-height:1.4}.headBtns{display:flex;gap:7px;align-items:center}.headBtns button{border:1px solid var(--stroke);border-radius:11px;background:#182e49;color:#fff;padding:10px 12px;font-size:18px}.status{color:#ffe0a1;font-size:10px;padding:7px 9px;border:1px solid #6b5a39;border-radius:20px;white-space:nowrap}.status.good{color:#97efd5;border-color:#2c735e}.main{flex:1;padding:17px 14px 115px;min-height:70vh}.topline{font-size:10px;letter-spacing:1.1px;color:#e7c466;font-weight:800;margin-bottom:6px}.hero{min-height:212px;background:radial-gradient(circle at 82% 16%,#345b80,#0f3454 50%,#09192f 95%);border:1px solid #406a86;border-radius:19px;padding:21px;display:flex;flex-direction:column;justify-content:center;gap:9px}.hero h1{font-size:clamp(23px,6.3vw,32px);line-height:1.15;letter-spacing:-.7px;margin:0;max-width:390px}.hero p{margin:0;font-size:12px;color:#c4d9ed;max-width:360px}.buttonRow{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.btn{border:1px solid transparent;border-radius:11px;background:var(--gold);color:#0a1729;font-size:12px;font-weight:800;padding:12px 14px;min-height:43px}.btn.alt{background:#214260;color:white;border-color:#497195}.btn.ghost{color:#f4f7fb;background:transparent;border-color:#4a6885}.btn:disabled{opacity:.55}.sectionhead{display:flex;justify-content:space-between;align-items:end;gap:8px;margin:20px 0 10px}.sectionhead h2{font-size:18px;line-height:1.25;margin:0}.sectionhead small{font-size:10px;color:var(--soft);text-align:right}.muted{color:var(--soft);font-size:12px}.subhead{font-size:17px;font-weight:850;margin:3px 0 6px}.tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.tile{border:1px solid #2f4f73;background:#10233c;border-radius:12px;min-width:0;overflow:hidden;color:#edf6ff;text-align:left;padding:0}.tile .poster{height:142px;background:linear-gradient(125deg,#143c60,#152035);display:grid;place-items:center;position:relative;overflow:hidden}.tile.compact .poster{height:96px}.tile .poster img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}.fallback{font-size:32px;opacity:.6}.tile .tag{position:absolute;top:8px;left:8px;font-size:9px;border-radius:5px;background:#071324d9;color:#f2d27f;padding:4px 6px;font-weight:800}.tile strong{display:block;font-size:12px;line-height:1.25;margin:9px 10px 3px;min-height:15px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}.tile small{display:block;margin:0 10px 11px;font-size:10px;color:#9db4d0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.empty,.panel{background:linear-gradient(140deg,#102640,#101c31);border:1px solid #2e506e;border-radius:12px;padding:15px;margin:13px 0}.empty{color:#bdcfe1;font-size:12px}.empty b{display:block;color:#fff;margin-bottom:6px}.chiprow{display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;padding:4px 0 10px}.chiprow button{border:1px solid #345472;background:#15304e;color:#d6e5f7;padding:9px 12px;border-radius:30px;white-space:nowrap;font-size:11px;flex-shrink:0}.chiprow .selected{background:var(--gold);border-color:var(--gold);color:#111b2a;font-weight:850}.input,select{width:100%;color:white;background:#081a30;border:1px solid #466585;border-radius:10px;padding:13px;outline:0;min-height:44px}.input::placeholder{color:#849db9}label{display:block;font-size:11px;color:#bed1e5;margin:12px 0 5px}.list{display:grid;gap:6px}.listbtn{display:flex;gap:10px;align-items:center;width:100%;background:#132c4c;border:1px solid #355a7b;border-radius:11px;color:#f1f7ff;padding:13px;text-align:left;font-size:13px}.listbtn .grow{flex:1;min-width:0}.listbtn span{color:#9db8d6}.banner{background:#2b2417;border:1px solid #715e35;border-radius:10px;padding:12px;color:#ffe1a8;font-size:11px;margin:13px 0;line-height:1.6}.goodtext{color:#9cf4d3}.errtext{color:#ffbeb7}.dock{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:1px;background:#08172a;border-top:1px solid #294663;padding:7px 4px calc(8px + env(safe-area-inset-bottom));position:fixed;bottom:0;left:0;right:0;z-index:10;max-width:960px;margin:auto}.dock button{display:flex;flex-direction:column;align-items:center;gap:4px;border:0;background:transparent;color:#a8bed5;border-radius:9px;min-height:52px;padding:7px 2px;font-size:10px}.dock button b{font-size:21px;font-weight:500;line-height:1}.dock button.on{background:#193553;color:#ffd068}.modal{position:fixed;inset:0;z-index:25;background:#020810ed;padding:13px;display:flex;align-items:center;justify-content:center;overflow:auto}.modal.hidden{display:none}.sheet{background:#0d2039;border:1px solid #3a628a;border-radius:17px;padding:15px;width:100%;max-width:600px;max-height:94dvh;overflow:auto}.sheetHead{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px}.sheetHead strong{font-size:17px}.close{border:1px solid #4c6784;border-radius:9px;background:#203c5c;color:#fff;padding:9px 12px;font-size:12px}.video{width:100%;aspect-ratio:16/9;background:#010409;border-radius:8px;display:block}.toast{position:fixed;left:14px;right:14px;bottom:calc(79px + env(safe-area-inset-bottom));z-index:40;padding:13px 15px;border-radius:13px;background:#174462;color:#f4f9ff;border:1px solid #5cb0ca;box-shadow:0 9px 26px #0009;font-size:12px;max-width:650px;margin:auto}.toast.hidden{display:none}.ep{background:#15314e;color:#eaf3fc;border:1px solid #3b5d81;padding:12px;text-align:left;border-radius:10px;width:100%;margin:4px 0;font-size:12px}.spacer{height:10px}.spinner{display:inline-block;height:13px;width:13px;border:2px solid #819bbb;border-top-color:var(--gold);border-radius:50%;animation:spin .7s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}.telemetry{font-size:11px;color:#b4c7dc;margin:9px 0}.fine{font-size:10px;line-height:1.5;color:#9bb4d1}.line{border-top:1px solid #305071;padding:11px 0;color:#b9cde5;display:flex;justify-content:space-between;gap:9px;font-size:12px}
+.brand{display:flex;align-items:center;gap:8px;min-width:0}.brand-icon{flex:none;width:40px;height:40px;border-radius:8px}.brand .logo{font-size:clamp(13px,4.6vw,20px)}
+@media(max-width:350px){.brand{gap:5px}.brand-icon{width:32px;height:32px}.headBtns{gap:4px}.status{padding-inline:5px}.headBtns button{padding-inline:8px}}
 @media(min-width:680px){.main{padding:23px}.tiles{grid-template-columns:repeat(4,minmax(0,1fr))}.hero{min-height:250px}.hero h1{font-size:37px}.dock{max-width:960px}.tile .poster{height:165px}}
 </style>
 </head>
 <body>
 <div class="shell">
-<header class="top"><div><div class="logo">▶ LABELA <i>PLAY 2.0</i></div><div class="subtitle">Mais que entretenimento, momentos em família</div></div><div class="headBtns"><span class="status" id="conn">AGUARDANDO</span><button id="quickSearch" aria-label="Pesquisar">⌕</button></div></header>
+<header class="top"><div class="brand"><!-- BRAND_ICON --><div><div class="logo">LABELA <i>PLAY 2.0</i></div><div class="subtitle">Mais que entretenimento, momentos em família</div></div></div><div class="headBtns"><span class="status" id="conn">AGUARDANDO</span><button id="quickSearch" aria-label="Pesquisar">⌕</button></div></header>
 <main id="main" class="main"><div class="panel"><span class="spinner"></span> Consultando seu ambiente...</div></main>
 <nav class="dock" id="dock" aria-label="Menu inferior"></nav>
 </div>
 <div id="detailModal" class="modal hidden"><div class="sheet"><div class="sheetHead"><strong id="detailTitle">Detalhes</strong><button class="close" data-close="detail">✕ Voltar</button></div><div id="detailContent"></div></div></div>
 <div id="playerModal" class="modal hidden"><div class="sheet" style="max-width:850px"><div class="sheetHead"><div><strong id="playTitle">Reprodução</strong><div class="fine" id="playType"></div></div><button class="close" data-close="player">✕ Voltar</button></div><video id="video" class="video" playsinline controls preload="metadata"></video><div class="telemetry" id="telemetry">Ainda não há sinal confirmado.</div><div class="buttonRow"><button class="btn alt" id="full">⛶ Tela cheia</button><button class="btn ghost" id="retry">↻ Tentar novamente</button></div><p class="fine">Som e imagem dependem da origem IPTV, codec, rede e autorização do seu navegador.</p></div></div>
 <div id="toast" class="toast hidden"></div>
-<script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.21/dist/hls.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/hls.js@1.6.16/dist/hls.min.js" integrity="sha384-5E8B0pTlZZJMabWpC0fyYf6OUpe15jJij34BqBAh4NXoHAlLNOjCPRrwtOXOQFAn" crossorigin="anonymous" defer></script>
 <script>
 (()=>{'use strict';
 const $=s=>document.querySelector(s),main=$('#main'),dock=$('#dock');
 const sections=[['home','⌂','Início'],['live','▣','Ao Vivo'],['movie','▤','Filmes'],['series','▧','Séries'],['radio','♫','Rádios'],['more','☰','Mais']];
-const state={page:'home',items:[],connected:false,group:'',q:'',limit:48,detail:null,ep:[],playing:null,sort:'az',error:''};
+const state={page:'home',items:[],connected:false,group:'',q:'',limit:48,detail:null,ep:[],playing:null,sort:'az',error:'',account:null};
 const KEY='labela20_mobile_private_';
 let hls=null,toaster=0,searchTimer=null;
 const esc=x=>String(x===undefined||x===null?'':x).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -34,15 +37,15 @@ const normalize=x=>String(x||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'')
 const local=(name,def)=>{try{return JSON.parse(localStorage.getItem(KEY+name))??def}catch{return def}};
 const save=(name,val)=>{try{localStorage.setItem(KEY+name,JSON.stringify(val))}catch{}};
 let fav=local('favorites',[]),history=local('history',{});
-const btn=(txt,action,klass='')=>'<button class="btn '+klass+'" data-act="'+esc(action)+'">'+txt+'</button>';
+const btn=(txt,action,klass='')=>'<button type="button" class="btn '+klass+'" data-act="'+esc(action)+'">'+txt+'</button>';
 function notice(s){clearTimeout(toaster);const t=$('#toast');t.textContent=s;t.classList.remove('hidden');toaster=setTimeout(()=>t.classList.add('hidden'),5300)}
-async function req(path,opt){const r=await fetch(path,{credentials:'same-origin',...opt});let d;try{d=await r.json()}catch{throw Error('Resposta inesperada do servidor.')};if(!r.ok)throw Error(d.error||'Falha '+r.status);return d}
+async function req(path,opt){const r=await fetch(path,{credentials:'same-origin',...opt});let d;try{d=await r.json()}catch{throw Error('Resposta inesperada do servidor.')};if(r.status===401){location.replace('/login');throw Error('A sessão de testes expirou.')};if(!r.ok)throw Error(d.error||'Falha '+r.status);return d}
 function isRadio(x){return x.kind==='radio'||x.kind==='live'&&(/\bradio\b|\bradios\b|\bfm\b|\bam\b|\bmusica\b/i.test(normalize(x.group))||/^(radio|rádio)\s/i.test(x.name))}
 function filtered(type){return state.items.filter(x=>type==='radio'?isRadio(x):type==='live'?x.kind==='live'&&!isRadio(x):x.kind===type)}
 function goodImage(url){return /^https:\/\//i.test(url||'')&&url.length<720?url:null}
 function label(x){return isRadio(x)?'RÁDIO':x.kind==='live'?'AO VIVO':x.kind==='movie'?'FILME':'SÉRIE'}
 function tile(x,compact=false){let image=goodImage(x.poster);return '<button class="tile '+(compact?'compact':'')+'" data-item="'+esc(x.key)+'"><div class="poster"><span class="fallback">'+(isRadio(x)?'♫':x.kind==='series'?'▧':x.kind==='live'?'▣':'▶')+'</span>'+(image?'<img loading="lazy" src="'+esc(image)+'" alt="" onerror="this.remove()">':'')+'<span class="tag">'+label(x)+'</span></div><strong>'+esc(x.name)+'</strong><small>'+esc(x.group)+'</small></button>'}
-function empty(s){return '<div class="empty"><b>Nenhum conteúdo fictício</b>'+esc(s)+'<div class="buttonRow">'+btn('⚙ Configurar lista','page:settings','alt')+'</div></div>'}
+function empty(s){return '<div class="empty"><b>Nenhum conteúdo disponível</b>'+esc(s)+'<div class="buttonRow">'+btn('⚙ Configurar lista','page:settings','alt')+'</div></div>'}
 function updateDock(){dock.innerHTML=sections.map(([key,ico,txt])=>'<button class="'+(state.page===key?'on':'')+'" data-page="'+key+'"><b>'+ico+'</b>'+txt+'</button>').join('');$('#conn').textContent=state.connected?'● CONECTADO':'○ SEM LISTA';$('#conn').classList.toggle('good',state.connected)}
 function go(page){closeDetail();state.page=page;state.group='';state.q='';state.limit=48;render();window.scrollTo({top:0,behavior:'instant'})}
 function home(){
@@ -61,51 +64,64 @@ const q=normalize(state.q),list=state.items.filter(x=>!q||normalize(x.name).incl
 return '<div class="subhead">Busca inteligente</div><p class="muted">Pesquise em todo o catálogo real. As buscas são executadas localmente, sem processamento pesado contínuo.</p><input id="searchInput" class="input" placeholder="Filme, canal, série ou rádio..." value="'+esc(state.q)+'">'+(state.connected?'<div class="sectionhead"><h2>Resultados</h2><small>'+list.length+' itens</small></div><div class="tiles">'+list.slice(0,state.limit).map(x=>tile(x)).join('')+'</div>'+(list.length>state.limit?'<div class="buttonRow">'+btn('Mais resultados','moreItems','alt')+'</div>':''):empty('A lista ainda não está conectada.'));
 }
 function favorites(){const items=fav.map(k=>state.items.find(x=>x.key===k)).filter(Boolean);return '<div class="subhead">Meus favoritos</div><p class="muted">Salvos somente neste navegador e separados das versões anteriores.</p>'+(items.length?'<div class="tiles">'+items.map(x=>tile(x)).join('')+'</div>':empty('Nenhum favorito salvo neste teste.'))}
-function settings(){return '<div class="subhead">Minha lista IPTV</div><p class="muted">O servidor de origem é fixo. Suas credenciais não são gravadas no código público.</p><div class="panel"><b>Provedor configurado</b><div class="fine">4KPlay · http://4k2026.biz</div><div class="line"><span>Credenciais no serviço</span><strong id="configuredVal">Verificando...</strong></div><div class="line"><span>Catálogo</span><strong>'+(state.connected?'Conectado':'Aguardando')+'</strong></div><div class="buttonRow">'+btn('↻ Atualizar catálogo','reload','alt')+'</div></div>'+(state.error?'<div class="banner" role="alert"><b>Diagnóstico da última tentativa</b><div style="margin-top:5px">'+esc(state.error)+'</div><div class="buttonRow">'+btn('⬡ Abrir diagnóstico','page:diag','alt')+'</div></div>':'')+'<div class="panel"><b>Inserir credenciais caso necessário</b><p class="fine">Preencha somente se a conexão automática não funcionar. Evite enviar senha por chat ou compartilhar capturas.</p><form id="connectForm"><label>Usuário Xtream</label><input id="accountUser" class="input" autocomplete="off" required><label>Senha Xtream</label><input id="accountPass" type="password" class="input" autocomplete="off" required><div class="buttonRow"><button class="btn" type="submit">Conectar minha lista</button></div></form></div><div class="banner">A conexão entre esta hospedagem e o provedor informado utiliza HTTP e não possui criptografia ponta a ponta. Para uso continuado, solicite ao provedor um endpoint HTTPS.</div>'}
-function more(){return '<div class="subhead">Mais recursos</div><div class="list">'+[['search','⌕ Busca inteligente'],['favorites','♡ Meus favoritos'],['assistant','✦ Assistente Labela'],['settings','⚙ Minha lista IPTV'],['admin','▦ Painel administrativo'],['diag','⬡ Diagnóstico']].map(([p,s])=>'<button class="listbtn" data-page="'+p+'"><b class="grow">'+s+'</b><span>›</span></button>').join('')+'</div><div class="banner">IA sob demanda: não há escuta permanente nem execução contínua de modelos em segundo plano.</div>'}
-function assistant(){return '<div class="subhead">Assistente Labela</div><p class="muted">Comandos em linguagem natural, busca local no catálogo e confirmação antes de reproduzir. Modelo de IA remoto ainda não integrado.</p><div class="panel"><label>O que você deseja assistir?</label><input id="command" class="input" placeholder="Ex.: Procure HBO 2"><div class="buttonRow">'+btn('Interpretar','interpret')+btn('🎙 Falar','voice','alt')+'</div><div id="aiResult" class="fine" style="margin-top:15px">Aguardando comando.</div></div>'}
-function admin(){let c=[['Canais',filtered('live').length],['Filmes',filtered('movie').length],['Séries',filtered('series').length],['Rádios',filtered('radio').length]];return '<div class="subhead">Labela Control Center</div><p class="muted">Métricas apenas deste teste. Nenhuma TV foi vinculada.</p><div class="tiles">'+c.map(([a,n])=>'<div class="panel" style="margin:0"><small>'+a+'</small><h2 style="margin:3px 0">'+(state.connected?n:'—')+'</h2><small class="fine">'+(state.connected?'Dados da API':'Sem conexão')+'</small></div>').join('')+'</div><div class="panel"><div class="line"><span>Dispositivos externos</span><strong>Não vinculados</strong></div><div class="line"><span>Atualização LG / Roku / Android</span><strong>Desabilitada</strong></div><div class="line"><span>Monitoramento ao vivo</span><strong>Não integrado</strong></div></div>'}
-function diag(){return '<div class="subhead">Diagnóstico</div><div class="panel"><div class="line"><span>Interface Mobile</span><strong class="goodtext">Disponível</strong></div><div class="line"><span>Catálogo IPTV</span><strong>'+(state.connected?'Conectado':'Não validado')+'</strong></div><div class="line"><span>HLS.js</span><strong>'+((window.Hls&&Hls.isSupported())?'Compatível':'Ainda não confirmado')+'</strong></div><div class="line"><span>Áudio / imagem real</span><strong>Conferir no player</strong></div><div class="line"><span>IA remota</span><strong>Não integrada</strong></div></div><div class="buttonRow">'+btn('Ver eventos','events','alt')+'</div><div class="panel" id="eventsBox">Sem eventos consultados.</div>'}
-function render(){updateDock();main.innerHTML=({home,live:()=>catalog('live'),movie:()=>catalog('movie'),series:()=>catalog('series'),radio:()=>catalog('radio'),search,favorites,settings,more,assistant,admin,diag}[state.page]||home)();if(state.page==='settings')loadAccount()}
-async function loadAccount(){
- try{
-  const d=await req('/api/account');
-  const el=$('#configuredVal');
-  if(el)el.textContent=d.configured?'Configuradas no servidor':'Não configuradas';
-  if(d.catalogIssues&&d.catalogIssues.length&&state.page==='settings'){
-   state.error='Algumas seções do catálogo não responderam: '+d.catalogIssues.join(', ')+'.';
-   if(!state.connected)notice(state.error);
-  }
- }catch(e){
-  const el=$('#configuredVal');
-  if(el)el.textContent='Erro ao consultar';
-  state.error=e.message||'Falha ao consultar o estado da conta.';
-  const box=document.createElement('div');
-  box.className='banner';box.setAttribute('role','alert');box.textContent=state.error;
-  const current=$('#configuredVal');
-  if(current&&current.closest('.panel'))current.closest('.panel').insertAdjacentElement('afterend',box);
- }
+function settings(){
+ const account=state.account;
+ const security=account?.secureUpstream
+  ? '<div class="panel"><b>Conectar uma conta Xtream</b><p class="fine">A conta é usada somente nesta sessão de teste.</p><form id="connectForm"><label for="accountUser">Usuário Xtream</label><input id="accountUser" class="input" autocomplete="username" autocapitalize="none" maxlength="150" required><label for="accountPass">Senha Xtream</label><input id="accountPass" type="password" class="input" autocomplete="current-password" maxlength="150" required><div class="buttonRow"><button class="btn" type="submit">Conectar minha lista</button></div></form></div>'
+  : account ? '<div class="banner">O provedor configurado usa HTTP. O envio das credenciais ficará indisponível até o provedor confirmar um endereço Xtream HTTPS válido.</div>' : '';
+ return '<div class="subhead">Minha lista IPTV</div><div class="panel"><div class="line"><span>Conta Xtream</span><strong>'+(!account?'Verificando…':account.configured?'Configurada':'Aguardando configuração')+'</strong></div><div class="line"><span>Catálogo</span><strong>'+(state.connected?'Conectado':'Aguardando')+'</strong></div><div class="buttonRow">'+btn('↻ Atualizar catálogo','reload','alt')+'</div></div>'+(state.error?'<div class="banner" role="alert">'+esc(state.error)+'</div>':'')+security;
 }
+function more(){return '<div class="subhead">Mais recursos</div><div class="list">'+[['search','⌕ Busca inteligente'],['favorites','♡ Meus favoritos'],['assistant','✦ Assistente Labela'],['settings','⚙ Minha lista IPTV'],['admin','▦ Painel administrativo'],['diag','⬡ Diagnóstico']].map(([p,s])=>'<button class="listbtn" data-page="'+p+'"><b class="grow">'+s+'</b><span>›</span></button>').join('')+'</div><div class="banner">IA sob demanda: não há escuta permanente nem execução contínua de modelos em segundo plano.</div>'}
+function assistant(){
+ return '<div class="subhead">Assistente Labela</div><p class="muted">Busque por título ou peça uma temporada e um episódio. Confira a seleção antes de reproduzir.</p><div class="panel"><form id="assistantForm"><label for="command">O que você deseja assistir?</label><input id="command" class="input" maxlength="160" placeholder="Ex.: Procure HBO 2" autocomplete="off"><div class="buttonRow"><button class="btn" type="submit">Buscar na lista</button>'+btn('🎙 Falar','voice','alt')+(state.account?.aiConfigured?btn('Interpretar com OpenAI','interpretRemote','alt'):'')+'</div></form>'+(state.account?.aiConfigured?'<p class="fine">Use somente o título ou comando. Ao escolher OpenAI, o texto digitado é enviado à API externa.</p>':'')+'<div id="aiResult" class="fine" role="status" style="margin-top:15px">Aguardando comando.</div></div>';
+}
+function admin(){let c=[['Canais',filtered('live').length],['Filmes',filtered('movie').length],['Séries',filtered('series').length],['Rádios',filtered('radio').length]];return '<div class="subhead">Labela Control Center</div><p class="muted">Métricas apenas deste teste. Nenhuma TV foi vinculada.</p><div class="tiles">'+c.map(([a,n])=>'<div class="panel" style="margin:0"><small>'+a+'</small><h2 style="margin:3px 0">'+(state.connected?n:'—')+'</h2><small class="fine">'+(state.connected?'Dados da API':'Sem conexão')+'</small></div>').join('')+'</div><div class="panel"><div class="line"><span>Dispositivos externos</span><strong>Não vinculados</strong></div><div class="line"><span>Atualização LG / Roku / Android</span><strong>Desabilitada</strong></div><div class="line"><span>Monitoramento ao vivo</span><strong>Não integrado</strong></div></div>'}
+function diag(){return '<div class="subhead">Diagnóstico</div><div class="panel"><div class="line"><span>Interface Mobile</span><strong class="goodtext">Disponível</strong></div><div class="line"><span>Catálogo IPTV</span><strong>'+(state.connected?'Conectado':'Não validado')+'</strong></div><div class="line"><span>HLS.js</span><strong>'+((window.Hls&&Hls.isSupported())?'Compatível':'Ainda não confirmado')+'</strong></div><div class="line"><span>Áudio / imagem real</span><strong>Conferir no player</strong></div><div class="line"><span>IA remota</span><strong>'+(state.account?.aiConfigured?'Configurada para uso sob demanda':'Aguardando configuração')+'</strong></div></div><div class="buttonRow">'+btn('Ver eventos','events','alt')+'</div><div class="panel" id="eventsBox">Sem eventos consultados.</div>'}
+function render(){updateDock();main.innerHTML=({home,live:()=>catalog('live'),movie:()=>catalog('movie'),series:()=>catalog('series'),radio:()=>catalog('radio'),search,favorites,settings,more,assistant,admin,diag}[state.page]||home)()}
 async function loadCatalog(){
- const old=state.connected;
- main.innerHTML='<div class="panel"><span class="spinner"></span> Consultando catálogo real...</div>';
+ if(state.loading)return;
+ state.loading=true;
+ if(!state.connected)main.innerHTML='<div class="panel"><span class="spinner"></span> Consultando catálogo...</div>';
  try{
+  state.account=await req('/api/account');
   const d=await req('/api/catalog');
   state.items=d.items||[];
-  state.connected=true;
-  state.error='';
-  notice('Catálogo recebido: '+state.items.length.toLocaleString('pt-BR')+' itens.');
+  state.connected=d.connected===true;
+  state.error=d.partial&&state.connected?'Algumas seções do catálogo não responderam.':'';
+  if(state.connected)notice('Catálogo recebido: '+state.items.length.toLocaleString('pt-BR')+' itens.');
  }catch(e){
+  state.items=[];
   state.connected=false;
   state.error=e.message||'Falha de comunicação com o serviço.';
-  if(!old)notice(state.error);
+  notice(state.error);
+ }finally{
+  state.loading=false;
+  render();
  }
- render();
 }
 function showDetail(x){state.detail=x;$('#detailTitle').textContent=x.name;$('#detailModal').classList.remove('hidden');const f=fav.includes(x.key),info='<p class="muted">'+esc(x.group)+'</p><p class="muted">'+esc(x.plot||'')+'</p>';$('#detailContent').innerHTML=info+'<div class="buttonRow">'+(x.kind==='series'?btn('▧ Selecionar episódio','episodes','alt'):btn(isRadio(x)?'♫ Ouvir':'▶ Assistir','playItem'))+btn(f?'♥ Remover favorito':'♡ Favoritar','favorite','ghost')+'</div><div id="detailExtras"></div>';if(x.kind==='live')loadEpg(x)}
 function closeDetail(){$('#detailModal').classList.add('hidden');state.detail=null}
 async function loadEpg(x){const box=$('#detailExtras');box.innerHTML='<p class="muted">Carregando EPG...</p>';try{const d=await req('/api/epg?id='+encodeURIComponent(x.id));if(state.detail?.key!==x.key)return;const rows=(d.epg||[]).slice(0,7);box.innerHTML='<div class="sectionhead"><h2>Programação</h2></div>'+(rows.length?rows.map(r=>'<div class="line"><span>'+esc(r.start||'')+' — '+esc(r.end||'')+'</span><strong>'+esc(r.title||'Programa')+'</strong></div>').join(''):'<p class="muted">Nenhuma programação enviada pelo provedor.</p>')}catch(e){box.innerHTML='<p class="muted">'+esc(e.message)+'</p>'}}
-async function episodes(x){const box=$('#detailExtras');box.innerHTML='<div class="panel"><span class="spinner"></span> Consultando temporadas...</div>';try{const d=await req('/api/series?id='+encodeURIComponent(x.id));state.ep=d.episodes||[];const seasons=[...new Set(state.ep.map(e=>e.season))].sort((a,b)=>Number(a)-Number(b));box.innerHTML='<label>Temporada</label><select id="season">'+seasons.map(s=>'<option value="'+esc(s)+'">Temporada '+esc(s)+'</option>').join('')+'</select><div class="spacer"></div><div id="eps"></div>';const draw=()=>{let s=$('#season').value;$('#eps').innerHTML=state.ep.filter(e=>e.season===s).map(e=>'<button class="ep" data-episode="'+esc(e.id)+'">▶ Ep. '+esc(e.number)+' — '+esc(e.name)+'</button>').join('')};$('#season').onchange=draw;draw()}catch(e){box.textContent=e.message}}
+async function episodes(x,selection={}){const box=$('#detailExtras');box.innerHTML='<div class="panel"><span class="spinner"></span> Consultando temporadas...</div>';try{
+ const d=await req('/api/series?id='+encodeURIComponent(x.id));
+ if(!box.isConnected||state.detail?.key!==x.key)return;
+ state.ep=d.episodes||[];
+ const seasons=[...new Set(state.ep.map(e=>e.season))].sort((a,b)=>Number(a)-Number(b));
+ if(!seasons.length){box.textContent='O provedor não retornou episódios.';return}
+ box.innerHTML='<label for="season">Temporada</label><select id="season">'+seasons.map(s=>'<option value="'+esc(s)+'">Temporada '+esc(s)+'</option>').join('')+'</select><div class="spacer"></div><div id="eps"></div>';
+ const season=seasons.find(s=>Number(s)===selection.season);
+ if(season)$('#season').value=season;
+ const draw=()=>{
+  const s=$('#season').value;
+  $('#eps').innerHTML=state.ep.filter(e=>e.season===s).map(e=>'<button class="ep" data-episode="'+esc(e.id)+'">▶ Ep. '+esc(e.number)+' — '+esc(e.name)+'</button>').join('');
+ };
+ $('#season').onchange=draw;draw();
+ if(selection.season){
+  const ep=season&&state.ep.find(e=>e.season===season&&Number(e.number)===selection.episode);
+  if(ep)document.querySelector('[data-episode="'+ep.id+'"]')?.focus();
+  else if(!season||selection.episode)notice('A temporada ou o episódio solicitado não apareceu na lista.');
+ }
+}catch(e){box.textContent=e.message}}
 function remember(x){const k=isRadio(x)?'radio':x.kind;history[k]={key:x.key,at:Date.now()};save('history',history)}
 function startPlayback(x,episode){if(!x)return;closeDetail();state.playing={x,episode};$('#playTitle').textContent=x.name+(episode?' · Ep. '+episode.number:'');$('#playType').textContent=label(x);$('#playerModal').classList.remove('hidden');$('#telemetry').textContent='Carregando mídia; aguardando imagem e som...';const v=$('#video');v.pause();v.removeAttribute('src');v.load();if(hls){hls.destroy();hls=null}
 let kind=x.kind,ext=episode?episode.ext:x.ext||'mp4',sid=episode?episode.id:x.id;
@@ -113,28 +129,113 @@ if(kind==='live')ext='m3u8';
 const url='/media/'+kind+'/'+encodeURIComponent(sid)+'.'+encodeURIComponent(ext);
 if(ext==='m3u8'&&window.Hls&&Hls.isSupported()){hls=new Hls({enableWorker:true,maxBufferLength:10,backBufferLength:6,lowLatencyMode:true});hls.loadSource(url);hls.attachMedia(v);hls.on(Hls.Events.ERROR,(_ev,d)=>{if(d?.fatal){$('#telemetry').textContent='Falha HLS: '+String(d.details||'stream indisponível')}})}
 else v.src=url;
-v.play().catch(()=>{$('#telemetry').textContent='Toque em ▶ no player para permitir áudio e vídeo.'});
+const playback=state.playing;
+const play=()=>v.play().catch(error=>{
+ if(state.playing===playback&&error.name==='NotAllowedError')$('#telemetry').textContent='Toque em ▶ no player para permitir áudio e vídeo.';
+});
+if(hls)hls.once(Hls.Events.MANIFEST_PARSED,play);
+else play();
 v.onplaying=()=>{remember(x);$('#telemetry').textContent='Reprodução iniciada — confirme imagem e som no aparelho.'};
 v.onerror=()=>{$('#telemetry').textContent='Erro ao decodificar ou receber a mídia. Confira o codec e o diagnóstico.'};
 v.onwaiting=()=>{$('#telemetry').textContent='Aguardando dados de vídeo...'};
 v.onloadedmetadata=()=>{$('#telemetry').textContent='Mídia identificada: '+(v.videoWidth?v.videoWidth+' × '+v.videoHeight:'áudio ou resolução ainda não confirmada')};
 }
 function closePlayer(){const v=$('#video');v.pause();v.removeAttribute('src');v.load();if(hls){hls.destroy();hls=null}$('#playerModal').classList.add('hidden');state.playing=null}
-function interpret(raw){const s=normalize(raw||'').replace(/^(labela[,\s]+)?(procure|busque|pesquise|buscar|encontre|abrir|abra|quero ver|assista|tocar|ouvir)\s+/,'').replace(/^(o|a|um|uma)\s+/,'');if(!s)return 'Informe um título para pesquisar.';const it=state.items.find(x=>normalize(x.name).includes(s));if(!it)return 'Não encontrei esse título na lista conectada. Experimente outro nome.';state.detail=it;return 'Encontrei: '+it.name+'. Toque em Abrir para conferir antes de reproduzir.'}
-main.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.page)return go(b.dataset.page);if(b.dataset.item){const x=state.items.find(v=>v.key===b.dataset.item);if(x)showDetail(x);return}if(b.hasAttribute('data-group')){state.group=b.dataset.group;render();return}const a=b.dataset.act;if(!a)return;if(a.startsWith('page:'))return go(a.slice(5));if(a==='moreItems'){state.limit+=48;render()}if(a==='reload')loadCatalog();if(a==='interpret'){const raw=$('#command')?.value||'';const msg=interpret(raw);$('#aiResult').innerHTML=esc(msg)+(state.detail?'<div class="buttonRow">'+btn('Abrir conteúdo','confirmAI')+'</div>':'');return}if(a==='confirmAI')showDetail(state.detail);if(a==='voice'){const C=window.SpeechRecognition||window.webkitSpeechRecognition;if(!C)return notice('Microfone não disponível neste navegador. Use a digitação.');const r=new C();r.lang='pt-BR';r.onresult=e=>{$('#command').value=e.results[0][0].transcript;$('#aiResult').textContent=interpret($('#command').value)};r.onerror=()=>notice('Falha de microfone.');r.start()}if(a==='events')req('/api/events').then(j=>{$('#eventsBox').innerHTML=(j.events||[]).map(x=>'<div class="line">'+esc(x.at)+' · '+esc(x.message)+'</div>').join('')||'Nenhum evento disponível.'}).catch(e=>notice(e.message))});
+function localIntent(raw){
+ const command=normalize(raw).replace(/^labela[,\s]+/,'').trim();
+ const numbered=command.match(/(?:\bs(\d+)\s*e(\d+)\b|\btemporada\s+(\d+)[,\s]+(?:e\s+)?episodio\s+(\d+)\b)/);
+ const title=numbered?command.replace(numbered[0],''):command;
+ const query=title.replace(/^(?:por favor\s+)?(?:(?:procure|busque|pesquise|encontre|abra|assista|reproduza|toque|ouvir|tocar|quero ver|quero assistir)\s+)(?:(?:a|o|um|uma)\s+)?/,'').trim();
+ const typed=query.match(/^(canal|filme|serie|radio)\s+(.+)/);
+ return {query:typed?typed[2]:query,kind:typed?{canal:'live',filme:'movie',serie:'series',radio:'radio'}[typed[1]]:numbered?'series':'any',
+         season:Number(numbered?.[1]||numbered?.[3]),episode:Number(numbered?.[2]||numbered?.[4])};
+}
+async function assist(raw,remote=false){
+ const box=$('#aiResult');
+ const input=$('#command');
+ if(!box||!input)return;
+ raw=raw.trim();
+ if(!raw){box.textContent='Digite um título para pesquisar.';return}
+ if(!state.connected){box.textContent='Conecte a lista IPTV para pesquisar seu catálogo.';return}
+ const local=localIntent(raw);
+ let intent=local, fallback=false;
+ const run={};
+ box.run=run;
+ if(remote){
+  box.textContent='Interpretando com OpenAI…';
+  try{
+   const result=await req('/api/assistant',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({command:raw})});
+   if(result.query)intent={...local,query:result.query,kind:result.kind};
+  }catch{fallback=true}
+ }
+ if(!box.isConnected||box.run!==run)return;
+ const words=normalize(intent.query).trim().split(/[^\p{L}\p{N}]+/u).filter(Boolean);
+ const query=words.join(' ');
+ if(!query){box.textContent='Inclua o nome do conteúdo que deseja localizar.';return}
+ const hits=(intent.kind==='any'?state.items:filtered(intent.kind)).map(item=>{
+  const name=normalize(item.name).trim().split(/[^\p{L}\p{N}]+/u).join(' ');
+  const tokens=name.split(' ');
+  const score=name===query?3:(' '+name+' ').includes(' '+query+' ')?2:words.every(word=>tokens.some(token=>/^\d+$/.test(word)?token===word:token.startsWith(word)))?1:0;
+  return {item,score};
+ }).filter(hit=>hit.score).sort((a,b)=>b.score-a.score).slice(0,5);
+ box.textContent=(fallback?'IA remota indisponível. Busca local utilizada. ':'')+(hits.length?'Escolha um resultado para conferir.':'Nenhum resultado na lista conectada.');
+ for(const {item} of hits){
+  const button=document.createElement('button');
+  button.type='button';button.className='listbtn';button.textContent=item.name;
+  button.onclick=()=>{showDetail(item);if(item.kind==='series'&&intent.season)episodes(item,intent)};
+  box.append(button);
+ }
+}
+function listen(){
+ const Recognition=window.SpeechRecognition||window.webkitSpeechRecognition;
+ if(!Recognition)return notice('O reconhecimento de voz não está disponível. Use a digitação.');
+ const input=$('#command');
+ const recognition=new Recognition();
+ recognition.lang='pt-BR';
+ recognition.onresult=e=>{
+  if(!input.isConnected)return;
+  input.value=e.results[0][0].transcript;
+  assist(input.value);
+ };
+ recognition.onerror=()=>notice('Não foi possível reconhecer a fala. Use a digitação.');
+ try{recognition.start()}catch{notice('Não foi possível iniciar o microfone.')}
+}
+main.addEventListener('click',e=>{
+ const b=e.target.closest('button');if(!b)return;
+ if(b.dataset.page)return go(b.dataset.page);
+ if(b.dataset.item){const x=state.items.find(v=>v.key===b.dataset.item);if(x)showDetail(x);return}
+ if(b.hasAttribute('data-group')){state.group=b.dataset.group;render();return}
+ const a=b.dataset.act;if(!a)return;
+ if(a.startsWith('page:'))return go(a.slice(5));
+ if(a==='moreItems'){state.limit+=48;render()}
+ if(a==='reload')loadCatalog();
+ if(a==='interpretRemote')assist($('#command').value,true);
+ if(a==='voice')listen();
+ if(a==='events')req('/api/events').then(j=>{
+  const box=$('#eventsBox');
+  if(!box)return;
+  const network=j.network||{};
+  const summary=[network.xtreamGet&&'Consulta Xtream sem credenciais: HTTP '+network.xtreamGet,
+    network.tls443&&'TLS na porta 443: '+({ok:'conectou',failed:'falhou',timeout:'expirou'}[network.tls443]||'pendente')].filter(Boolean);
+  const rows=[...summary,...(j.events||[]).map(x=>x.at+' · '+x.message)];
+  box.innerHTML=rows.map(row=>'<div class="line">'+esc(row)+'</div>').join('')||'Nenhum evento disponível.';
+ }).catch(e=>notice(e.message));
+});
 main.addEventListener('input',e=>{if(e.target.id==='searchInput'){state.q=e.target.value;let pos=e.target.selectionStart;clearTimeout(searchTimer);searchTimer=setTimeout(()=>{render();let input=$('#searchInput');if(input){input.focus();input.setSelectionRange(pos,pos)}},190)}});
 main.addEventListener('submit',async e=>{
+ if(e.target.id==='assistantForm'){e.preventDefault();assist($('#command').value);return}
  if(e.target.id!=='connectForm')return;
  e.preventDefault();
  const button=e.target.querySelector('button[type="submit"]');
  const username=$('#accountUser').value;
- const password=$('#accountPass').value;
+ const passwordField=$('#accountPass');
+ const password=passwordField.value;
+ passwordField.value='';
  if(button){button.disabled=true;button.textContent='Verificando sua conta...'}
  try{
-  const result=await req('/api/connect',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({user:username,password})});
+  await req('/api/connect',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({user:username,password})});
   state.error='';
-  if(result.partial)notice('Conectado. Algumas categorias ainda precisam de verificação.');
-  else notice('Conta validada; carregando conteúdos.');
+  notice('Conta validada pelo provedor. Carregando conteúdos…');
   go('home');
   loadCatalog();
  }catch(err){
