@@ -74,14 +74,16 @@ async function loadAccount(){
   if(el)el.textContent=d.configured?'Configuradas no servidor':'Não configuradas';
   if(d.catalogIssues&&d.catalogIssues.length&&state.page==='settings'){
    state.error='Algumas seções do catálogo não responderam: '+d.catalogIssues.join(', ')+'.';
-   if(!state.connected)render();
+   if(!state.connected)notice(state.error);
   }
  }catch(e){
   const el=$('#configuredVal');
   if(el)el.textContent='Erro ao consultar';
   state.error=e.message||'Falha ao consultar o estado da conta.';
-  const box=$('#accountStatusError');
-  if(box)box.textContent=state.error;
+  const box=document.createElement('div');
+  box.className='banner';box.setAttribute('role','alert');box.textContent=state.error;
+  const current=$('#configuredVal');
+  if(current&&current.closest('.panel'))current.closest('.panel').insertAdjacentElement('afterend',box);
  }
 }
 async function loadCatalog(){
